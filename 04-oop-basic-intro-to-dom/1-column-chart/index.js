@@ -7,14 +7,14 @@ export default class ColumnChart {
   #link = null;
   #element = null;
 
-  formatHeading = (data) => `${data}`;
+  #formatHeading = (data) => `${data}`;
 
   constructor({ data, label, value, link, formatHeading } = {}) {
     this.#data = data ?? this.#data;
     this.#label = label ?? this.#label;
     this.#value = value ?? this.#value;
     this.#link = link ?? this.#link;
-    this.formatHeading = formatHeading || this.formatHeading;
+    this.#formatHeading = formatHeading ?? this.#formatHeading;
 
     this.#element = document.createElement('div');
     this.#element.classList.add('column-chart');
@@ -45,7 +45,7 @@ export default class ColumnChart {
   }
 
   renderHeader() {
-    return `<div class="column-chart__header">${this.formatHeading(this.#value)}</div>`;
+    return `<div class="column-chart__header">${this.#formatHeading(this.#value)}</div>`;
   }
 
   renderChart() {
@@ -87,7 +87,8 @@ export default class ColumnChart {
   }
 
   destroy() {
-    //TODO: а что должно происходить?
+    this.remove();
+    this.#element = null;
   }
 
   update(data) {
